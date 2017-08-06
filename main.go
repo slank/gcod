@@ -30,7 +30,6 @@ func main() {
 	}
 
 	// preamble
-	fmt.Println("% Surfacing program")
 	fmt.Printf("(W=%.5f H=%.5f D=%.5f TW=%.5f FR=%.5f U=%s)\n", width, depth, z, toolWidth, feedrate, units)
 	fmt.Println("O1000")
 	fmt.Println("G00 X0Y0Z0")
@@ -39,18 +38,16 @@ func main() {
 
 	// surfacing loop
 	var x, y float64
-	for x = 0.0; x < width; x = x + toolWidth*3/4 {
+	for x = 0.0; x < width + toolWidth; x = x + toolWidth*3/4 {
 		if y == 0 {
 			y = depth
 		} else {
 			y = 0.0
 		}
-		if x > width {
-			x = width
+		if x > width + toolWidth {
+			x = width + toolWidth
 		}
-		fmt.Printf("G01 X%.5fY%.5f\n", x, y)
+		fmt.Printf("G01 Y%.5f\n", y)
+		fmt.Printf("G01 X%.5f\n", x)
 	}
-
-	// end
-	fmt.Println("%")
 }
